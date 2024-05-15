@@ -1,0 +1,22 @@
+{
+  "presets": [
+    [
+      "next/babel",
+      {
+        "preset-env": {
+          "targets": {
+            "esmodules": true
+          }
+        },
+        "preset-react": {
+          "runtime": "automatic",
+          "importSource": "@emotion/react"
+        },
+        "transform-runtime": {},
+        "styled-jsx": {},
+        "class-properties": {}
+      }
+    ]
+  ],
+  "plugins": ["@emotion/babel-plugin","@babel/plugin-transform-runtime"]
+}
