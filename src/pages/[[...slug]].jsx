@@ -2,12 +2,12 @@ import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PropTypes from 'prop-types';
 
+import HorizontalLayout from '../components/layouts/HorizontalLayout/HorizontalLayout';
 import config from '../config';
 import { PAGES_SLUGS_QUERY } from '../graphql/queries/pages';
 import usePermissions from '../hooks/usePermissions';
 import useRedirectOnLogout from '../hooks/useRedirectOnLogout';
-import GenericPage from '../layouts/blocks/GenericPage';
-import HorizontalLayout from '../layouts/HorizontalLayout';
+// import GenericPage from '../layouts/blocks/GenericPage';
 import initializeApollo from '../utils/apollo/initializeApolloClient';
 import getRootPageProps from '../utils/pages/getRootPageProps';
 import { generateStaticPaths, normalizePagesSlugs } from '../utils/pages/getStaticPaths';
@@ -33,13 +33,14 @@ const RootPageComponent = ({
 
   return (
     <HorizontalLayout copyright={copyright} settings={settings}>
-      <GenericPage
+      d
+      {/* <GenericPage
         componentsGridContainerSettings={componentsGridContainerSettings}
         globalUiConfigs={globalUiConfigs}
         seo={seo}
         slug={slug}
         uiComponents={uiComponents}
-      />
+      /> */}
     </HorizontalLayout>
   );
 };
@@ -51,6 +52,8 @@ RootPageComponent.propTypes = {
   pageContents: PropTypes.shape().isRequired,
   globalUiConfigs: PropTypes.shape().isRequired
 };
+
+export default RootPageComponent;
 
 export const getStaticPaths = async (ctx) => {
   const apolloClient = initializeApollo();

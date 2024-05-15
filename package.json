@@ -15,6 +15,7 @@
     "test-integration": "echo \"Error: no test specified\""
   },
   "dependencies": {
+    "@mui/icons-material": "5.15.17",
     "markdown-to-jsx": "7.4.7",
     "lodash": "4.17.21",
     "cross-fetch": "4.0.0",

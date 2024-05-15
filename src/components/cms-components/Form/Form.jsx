@@ -5,25 +5,18 @@ import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'next-i18next';
-import PropTypes from 'prop-types';
-import { createRef, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { formType as formPropTypes } from '../../../../types';
-import { MUTATION_STATUS, SUCCESS_NOTIFICATION_KEYS } from '../../../constants';
-import useGlobalTranslations, {
-  GLOBAL_TRANSLATION_TYPE
-} from '../../../hooks/useGlobalTranslations';
-import selectSettings from '../../../utils/common/componentSettings/selectSettings';
-import { UserContext } from '../../../utils/providers/UserProvider/UserContext';
-import AlertNotification from '../../common/AlertNotification';
+import { MUTATION_STATUS } from '../../../constants/serverConstants';
+import { UserContext } from '../../../context/UserContext/UserContext';
+import withNullabilityCheck from '../../../hocs/withNullabilityCheck';
+import selectSettings from '../../../utils/componentSettings/selectSettings';
 import ConfigurableButton from '../../common/ConfigurableButton';
 import { useNormalizedButtonConfig } from '../../common/ConfigurableButton/hooks';
 import { HorizontalStepper } from '../../common/HorizontalStepper';
-import ProgressAnimation from '../../common/ProgressAnimation';
 import RichText from '../../common/RichText';
-import withNullabilityCheck from '../../hocs/withNullabilityCheck';
 import FormStep from './components/FormStep';
 import {
   DEFAULT_NEXT_STEP_BUTTON,
@@ -75,7 +68,6 @@ const getStepsLabelsWithStateAndIcons = (formSteps, formState, getValues, active
 
 const FormComponent = ({ staticData }) => {
   const { t } = useTranslation();
-  const { getGlobalTranslation } = useGlobalTranslations();
   const { data: playerData } = useContext(UserContext);
 
   const { form } = staticData || {};
@@ -106,8 +98,6 @@ const FormComponent = ({ staticData }) => {
     headerGridItemProps,
     formGridItemProps,
     formStepSettings,
-    successAlertProps,
-    problemAlertProps,
     footerGridItemProps,
     horizontalStepperSettings
   } = getFormSettings(selectSettings(formSettings));
@@ -123,12 +113,12 @@ const FormComponent = ({ staticData }) => {
   );
 
   const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [, setIsAlertOpen] = useState(false);
 
   const isActiveStepFirst = activeStepIndex === 0;
   const isActiveStepLast = activeStepIndex === formAttributes.steps.length - 1;
 
-  const [onSubmit, mutationResult, submitRequestStatus, submitRequestProblems] = useFormSubmit(
+  const [onSubmit, mutationResult, submitRequestStatus] = useFormSubmit(
     formType,
     onSubmitLinkToOpen,
     anonymousFallbackLink
@@ -238,8 +228,6 @@ const FormComponent = ({ staticData }) => {
           {...mainGridContainerProps}
           onSubmit={formMethods.handleSubmit(onSubmit)}
         >
-          {loading && <ProgressAnimation />}
-
           <Grid item {...titleGridItemProps}>
             <Grid container spacing={pendingForValue ? 2 : undefined}>
               {title && (
@@ -289,35 +277,6 @@ const FormComponent = ({ staticData }) => {
                 stepData={step}
               />
             ))}
-            {submitRequestStatus === MUTATION_STATUS.FAIL && submitRequestProblems && !loading && (
-              <AlertNotification
-                close={handleCloseAlert}
-                isOpen={isAlertOpen}
-                severity="error"
-                {...problemAlertProps}
-              >
-                {submitRequestProblems.map((problem) =>
-                  getGlobalTranslation({
-                    iqsTranslationId: problem?.problemCode,
-                    type: GLOBAL_TRANSLATION_TYPE.ERROR,
-                    status: submitRequestStatus
-                  })
-                )}
-              </AlertNotification>
-            )}
-            {submitRequestStatus === MUTATION_STATUS.SUCCESS && (
-              <AlertNotification
-                close={handleCloseAlert}
-                isOpen={isAlertOpen}
-                {...successAlertProps}
-              >
-                {getGlobalTranslation({
-                  iqsTranslationId: SUCCESS_NOTIFICATION_KEYS[formAttributes.type],
-                  status: submitRequestStatus,
-                  type: GLOBAL_TRANSLATION_TYPE.SUCCESS
-                })}
-              </AlertNotification>
-            )}
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '24px' }}>
               {!isActiveStepFirst && (
@@ -404,11 +363,6 @@ const FormComponent = ({ staticData }) => {
       </FormConfigContext.Provider>
     </FormProvider>
   );
-};
-
-FormComponent.propTypes = {
-  staticData: formPropTypes.isRequired,
-  globalData: PropTypes.shape()
 };
 
 FormComponent.defaultProps = {

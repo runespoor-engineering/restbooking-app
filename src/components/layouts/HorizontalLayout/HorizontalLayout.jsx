@@ -5,21 +5,15 @@ import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 
 import { SIDEBAR_TYPE } from '../../../constants/cms';
-import { useCmsStaticDataContext } from '../../../context/CmsStaticDataContext';
 import useBodyScrollPreventing from '../../../hooks/useBodyScrollPreventing';
-import selectSettings from '../../../utils/componentSettings/selectSettings';
 import { ActionButtonClickHandlersContext } from '../../cms-components/ActionButton/context/ActionButtonClickHandlersContext';
 import Footer from '../blocks/Footer/Footer';
 import Header from '../blocks/Header/Header';
 import { Sidebar } from '../blocks/Sidebar';
 
-const HorizontalLayout = ({ copyright, settings, children }) => {
+const HorizontalLayout = ({ copyright, children }) => {
+  console.log('HorizontalLayout');
   const router = useRouter();
-  const { globalContentConfigs } = useCmsStaticDataContext();
-  const { pageSettings, sidebarType } = globalContentConfigs.data[0]?.attributes || {};
-  const isSidebarShift = sidebarType === SIDEBAR_TYPE.shift;
-  const selectedSettings = selectSettings(settings);
-  const selectedGlobalPageSettings = selectSettings(pageSettings);
   const { setHandleOpenSidebar, setHandleCloseSidebar } = useContext(
     ActionButtonClickHandlersContext
   );
@@ -55,29 +49,24 @@ const HorizontalLayout = ({ copyright, settings, children }) => {
         backgroundColor: 'background.paper',
         display: 'flex',
         position: 'relative',
-        minHeight: '100vh',
-        ...(selectedSettings?.complexSx?.globalBoxSx ||
-          selectedGlobalPageSettings?.complexSx?.globalBoxSx)
+        minHeight: '100vh'
       }}
     >
-      <Sidebar handleMenuClose={handleMenuClose} isMenuOpened={isMenuOpened} type={sidebarType} />
+      <Sidebar
+        handleMenuClose={handleMenuClose}
+        isMenuOpened={isMenuOpened}
+        type={SIDEBAR_TYPE.overlay}
+      />
       <Box
         sx={{
           width: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          ...(selectedSettings?.complexSx?.mainLayoutBoxSx ||
-            selectedGlobalPageSettings?.complexSx?.mainLayoutBoxSx)
+          flexDirection: 'column'
         }}
       >
         <Box
           sx={{
-            transition: '0.3s ease-in-out',
-            ...(isSidebarShift &&
-              isMenuOpened &&
-              selectedGlobalPageSettings?.complexSx?.mainBoxShiftSx),
-            ...(selectedSettings?.complexSx?.mainBoxSx ||
-              selectedGlobalPageSettings?.complexSx?.mainBoxSx)
+            transition: '0.3s ease-in-out'
           }}
         >
           <Header />
@@ -89,14 +78,9 @@ const HorizontalLayout = ({ copyright, settings, children }) => {
             padding: '16px 16px 0 16px',
             overflow: 'hidden',
             transition: '0.3s ease-in-out',
-            ...(isSidebarShift &&
-              isMenuOpened &&
-              selectedGlobalPageSettings?.complexSx?.mainBoxShiftSx),
             p: {
               sm: '16px 24px 0 24px'
-            },
-            ...(selectedSettings?.complexSx?.mainBoxSx ||
-              selectedGlobalPageSettings?.complexSx?.mainBoxSx)
+            }
           }}
         >
           {children}

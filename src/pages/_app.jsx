@@ -11,7 +11,7 @@ import { DefaultSeo } from 'next-seo';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo } from 'react';
 
-// import { ActionButtonClickHandlersProvider } from '../cms-components/ActionButton/context/ActionButtonClickHandlersContext';
+import { ActionButtonClickHandlersProvider } from '../components/cms-components/ActionButton/context/ActionButtonClickHandlersContext';
 // import DynamicComponentsModal from '../common/DynamicComponentsModal/DynamicComponentsModal';
 import config from '../config';
 import localeMap from '../config/datepickerLocalization';
@@ -66,16 +66,16 @@ const RootAppComponent = ({ Component, pageProps, emotionCache = clientSideEmoti
 
             <ConfigContext.Provider value={configContextValue}>
               <UserProvider isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
-                {/* <ActionButtonClickHandlersProvider> */}
-                <LocalizationProvider
-                  adapterLocale={localeMap[router.locale]}
-                  dateAdapter={AdapterDateFns}
-                >
-                  {/* <DynamicComponentsModal /> */}
-                  <DefaultSeo />
-                  <Component {...pageProps} />
-                </LocalizationProvider>
-                {/* </ActionButtonClickHandlersProvider> */}
+                <ActionButtonClickHandlersProvider>
+                  <LocalizationProvider
+                    adapterLocale={localeMap[router.locale]}
+                    dateAdapter={AdapterDateFns}
+                  >
+                    {/* <DynamicComponentsModal /> */}
+                    <DefaultSeo />
+                    <Component {...pageProps} />
+                  </LocalizationProvider>
+                </ActionButtonClickHandlersProvider>
               </UserProvider>
             </ConfigContext.Provider>
           </ThemeProvider>
