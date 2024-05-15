@@ -5,9 +5,10 @@ import fetch from 'cross-fetch';
 
 import { SSR_MODE } from '../../constants/common';
 import { getPlayerSessionToken } from '../auth/userSessionToken';
+import logoutPlayer from '../auth/logoutUser';
 
 const clientHttpLink = new HttpLink({
-  uri: '/graphql',
+  uri: 'http://localhost:1337/graphql',
   fetch
 });
 
@@ -39,7 +40,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const getApolloClientLinks = (token) => {
   const serverHttpLink = new HttpLink({
-    uri: `${process.env.CMS_URL}/graphql`,
+    uri: `http://localhost:1337/graphql`,
     headers: {
       authorization: token ? `Bearer ${token}` : ''
     }

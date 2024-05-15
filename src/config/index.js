@@ -29,7 +29,7 @@ const ROUTES = {
 };
 
 const config = {
-  identifier: 'reddog',
+  identifier: 'brand-1',
   directPageSlugs: [
     // ROUTES.FORGOT_PASSWORD,
     ROUTES.GAME_TEMPLATE_PAGE,

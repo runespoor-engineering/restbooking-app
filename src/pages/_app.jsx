@@ -29,6 +29,8 @@ const clientSideEmotionCache = createEmotionCache();
 const RootAppComponent = ({ Component, pageProps, emotionCache = clientSideEmotionCache }) => {
   const apolloClient = initializeApollo();
 
+  console.log('======= pageProps =======', Component, pageProps, emotionCache)
+
   const router = useRouter();
   const { globalUiConfigs = {} } = pageProps;
 
@@ -96,6 +98,6 @@ RootAppComponent.defaultProps = {
   emotionCache: clientSideEmotionCache
 };
 
-const RootApp = (props) => <div {...{ ...props, localeMap, config }} />;
+const RootApp = (props) => <RootAppComponent {...{ ...props, localeMap, config }} />;
 
 export default appWithTranslation(RootApp);
