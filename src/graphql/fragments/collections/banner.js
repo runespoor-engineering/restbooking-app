@@ -22,16 +22,6 @@ export default gql`
         ...settingsJsonComponentFragment
       }
     }
-    segmentation {
-      inSet
-      segments {
-        data {
-          attributes {
-            ...segmentFragment
-          }
-        }
-      }
-    }
     largeImage {
       data {
         attributes {

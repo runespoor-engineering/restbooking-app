@@ -15,14 +15,11 @@ export default gql`
         }
       }
     }
-    termsAndConditionsPopover {
-      ...popoverComponentFragment
-    }
     settings {
       ...settingsJsonComponentFragment
     }
     sliderSettings {
-      ...sliderSettingsJsonComponentFragment
+      ...settingsJsonComponentFragment
     }
     componentGridItemSettings {
       ...settingsJsonComponentFragment

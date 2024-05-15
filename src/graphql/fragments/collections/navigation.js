@@ -13,7 +13,6 @@ export default gql`
         text
         link
         linkOpeningType
-        restrictFor
         icon {
           data {
             attributes {

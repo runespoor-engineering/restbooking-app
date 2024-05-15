@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  fragment playerAccountMenuButtonComponentFragment on ComponentPlayerAccountPlayerAccountMenuButton {
+  fragment playerAccountMenuButtonComponentFragment on ComponentUserAccountUserAccountMenuButton {
     id
     useBreakpoint {
       ...useBreakpointComponentFragment
