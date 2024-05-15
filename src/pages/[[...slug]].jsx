@@ -2,27 +2,21 @@ import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PropTypes from 'prop-types';
 
+import GenericPage from '../components/layouts/blocks/GenericPage';
 import HorizontalLayout from '../components/layouts/HorizontalLayout/HorizontalLayout';
 import config from '../config';
 import { PAGES_SLUGS_QUERY } from '../graphql/queries/pages';
 import usePermissions from '../hooks/usePermissions';
 import useRedirectOnLogout from '../hooks/useRedirectOnLogout';
-// import GenericPage from '../layouts/blocks/GenericPage';
 import initializeApollo from '../utils/apollo/initializeApolloClient';
 import getRootPageProps from '../utils/pages/getRootPageProps';
 import { generateStaticPaths, normalizePagesSlugs } from '../utils/pages/getStaticPaths';
 
-const RootPageComponent = ({
-  slug,
-  globalContentConfigs,
-  pageRequireds,
-  globalUiConfigs,
-  pageContents
-}) => {
+const RootPageComponent = ({ slug, globalContentConfigs, globalUiConfigs, pageContents }) => {
   const router = useRouter();
 
   const copyright = globalContentConfigs?.data[0]?.attributes.copyright || null;
-  const pages = pageRequireds?.data.concat(pageContents.data) || {};
+  const pages = pageContents.data || {};
   const { uiComponents, seo, componentsGridContainerSettings, permissions, settings } =
     pages[0]?.attributes || {};
 
@@ -33,14 +27,13 @@ const RootPageComponent = ({
 
   return (
     <HorizontalLayout copyright={copyright} settings={settings}>
-      d
-      {/* <GenericPage
+      <GenericPage
         componentsGridContainerSettings={componentsGridContainerSettings}
         globalUiConfigs={globalUiConfigs}
         seo={seo}
         slug={slug}
         uiComponents={uiComponents}
-      /> */}
+      />
     </HorizontalLayout>
   );
 };
@@ -48,7 +41,6 @@ const RootPageComponent = ({
 RootPageComponent.propTypes = {
   slug: PropTypes.string.isRequired,
   globalContentConfigs: PropTypes.shape().isRequired,
-  pageRequireds: PropTypes.PropTypes.shape().isRequired,
   pageContents: PropTypes.shape().isRequired,
   globalUiConfigs: PropTypes.shape().isRequired
 };
