@@ -1,4 +1,4 @@
-import { PLAYER_TOKEN_LOCAL_STORAGE_ITEM, SSR_MODE } from "../../constants/common";
+import { PLAYER_TOKEN_LOCAL_STORAGE_ITEM, SSR_MODE } from '../../constants/common';
 
 export const getPlayerSessionToken = () =>
   !SSR_MODE ? localStorage.getItem(PLAYER_TOKEN_LOCAL_STORAGE_ITEM) : null;

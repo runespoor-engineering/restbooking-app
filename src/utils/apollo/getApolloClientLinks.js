@@ -4,8 +4,8 @@ import { onError } from '@apollo/client/link/error';
 import fetch from 'cross-fetch';
 
 import { SSR_MODE } from '../../constants/common';
-import { getPlayerSessionToken } from '../auth/userSessionToken';
 import logoutPlayer from '../auth/logoutUser';
+import { getPlayerSessionToken } from '../auth/userSessionToken';
 
 const clientHttpLink = new HttpLink({
   uri: 'http://localhost:1337/graphql',

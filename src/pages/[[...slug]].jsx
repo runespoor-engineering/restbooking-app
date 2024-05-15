@@ -1,13 +1,55 @@
+import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import PropTypes from 'prop-types';
 
 import config from '../config';
 import { PAGES_SLUGS_QUERY } from '../graphql/queries/pages';
+import usePermissions from '../hooks/usePermissions';
+import useRedirectOnLogout from '../hooks/useRedirectOnLogout';
+import GenericPage from '../layouts/blocks/GenericPage';
+import HorizontalLayout from '../layouts/HorizontalLayout';
 import initializeApollo from '../utils/apollo/initializeApolloClient';
 import getRootPageProps from '../utils/pages/getRootPageProps';
 import { generateStaticPaths, normalizePagesSlugs } from '../utils/pages/getStaticPaths';
 
-export default (props) => {
-  return <div>Page</div>
+const RootPageComponent = ({
+  slug,
+  globalContentConfigs,
+  pageRequireds,
+  globalUiConfigs,
+  pageContents
+}) => {
+  const router = useRouter();
+
+  const copyright = globalContentConfigs?.data[0]?.attributes.copyright || null;
+  const pages = pageRequireds?.data.concat(pageContents.data) || {};
+  const { uiComponents, seo, componentsGridContainerSettings, permissions, settings } =
+    pages[0]?.attributes || {};
+
+  const [isAllowed] = usePermissions(permissions);
+  useRedirectOnLogout(permissions);
+
+  if (router.isFallback || !isAllowed) return <p>Loading...</p>;
+
+  return (
+    <HorizontalLayout copyright={copyright} settings={settings}>
+      <GenericPage
+        componentsGridContainerSettings={componentsGridContainerSettings}
+        globalUiConfigs={globalUiConfigs}
+        seo={seo}
+        slug={slug}
+        uiComponents={uiComponents}
+      />
+    </HorizontalLayout>
+  );
+};
+
+RootPageComponent.propTypes = {
+  slug: PropTypes.string.isRequired,
+  globalContentConfigs: PropTypes.shape().isRequired,
+  pageRequireds: PropTypes.PropTypes.shape().isRequired,
+  pageContents: PropTypes.shape().isRequired,
+  globalUiConfigs: PropTypes.shape().isRequired
 };
 
 export const getStaticPaths = async (ctx) => {

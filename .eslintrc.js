@@ -45,6 +45,7 @@ module.exports = {
       },
       { usePrettierrc: false }
     ],
+    'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': ['error', { peerDependencies: true }],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
@@ -63,6 +64,7 @@ module.exports = {
         unnamedComponents: 'arrow-function'
       }
     ],
+    'react/prop-types': 'off',
     'no-underscore-dangle': 'off',
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',

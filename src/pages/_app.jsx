@@ -29,7 +29,7 @@ const clientSideEmotionCache = createEmotionCache();
 const RootAppComponent = ({ Component, pageProps, emotionCache = clientSideEmotionCache }) => {
   const apolloClient = initializeApollo();
 
-  console.log('======= pageProps =======', Component, pageProps, emotionCache)
+  console.log('======= pageProps =======', Component, pageProps, emotionCache);
 
   const router = useRouter();
   const { globalUiConfigs = {} } = pageProps;

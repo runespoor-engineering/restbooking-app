@@ -19,8 +19,7 @@ const getRootPageProps = async ({ ctx, config, serverSideTranslations }) => {
   });
 
   const [globalUiConfig = {}] = data.globalUiConfigs.data || [];
-  const pageDataAttributes =
-    data?.pageContents?.data?.[0]?.attributes || {};
+  const pageDataAttributes = data?.pageContents?.data?.[0]?.attributes || {};
   // // const uiComponentsDynamicZones = pageDataAttributes?.uiComponents;
   const pageLayoutId = pageDataAttributes?.layout?.data?.id;
   const defaultLayoutId = globalUiConfig.attributes?.defaultLayout?.data?.id;

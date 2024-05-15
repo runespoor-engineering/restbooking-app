@@ -2,8 +2,8 @@ import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/
 import PropTypes from 'prop-types';
 import { createContext, useMemo, useState } from 'react';
 
-import { globalUiConfigType } from '../types';
 import { SSR_MODE } from '../constants/common';
+import { globalUiConfigType } from '../types';
 
 export const THEMES = {
   LIGHT: 'light',
