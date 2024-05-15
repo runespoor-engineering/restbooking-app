@@ -1,11 +1,7 @@
 import createEmotionServer from '@emotion/server/create-instance';
-import createCache from '@emotion/cache';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
-
-function createEmotionCache() {
-  return createCache({ key: 'css', prepend: true });
-}
+import createEmotionCache from '../utils/emotion/createEmotionCache';
 
 export default class MyDocument extends Document {
   render() {

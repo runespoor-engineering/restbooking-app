@@ -18,7 +18,7 @@ console.log(
 );
 
 // TODO add NL Before RD launch PT-2015
-module.exports ={
+module.exports = {
   // This disables standalone build mode by default, so that rush build works as before.
   // Otherwise, with standalone mode, it fails on creating Rush build cache as it doesn't allow symlinks.
   // See rush-project.json and description of outputFolderNames option...
@@ -50,6 +50,7 @@ module.exports ={
         // Ensure we're only doing this for modules we know they produce warnings we wish to ignore
         if (/\/node_modules\/\.pnpm\/i18next-fs-backend/.test(context.context)) {
           context.dependencies.forEach((dependency) => {
+            // eslint-disable-next-line no-param-reassign
             if (dependency.critical) dependency.critical = false; // Silence the warning
           });
         }
@@ -59,9 +60,7 @@ module.exports ={
     return config;
   },
   images: {
-    domains: [
-      'localhost'
-    ]
+    domains: ['localhost']
   },
   compress: process.env.NODE_ENV === 'development' // Next.js can't handle heavy HTML without compression in dev
 };

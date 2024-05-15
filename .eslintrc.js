@@ -89,21 +89,17 @@ module.exports = {
           },
           {
             name: 'next/link',
-            message:
-              'Use the custom `NextLinkComposed` component from `ui-kit` package instead.',
+            message: 'Use the custom `NextLinkComposed` component from `ui-kit` package instead.'
           },
           {
             name: '@testing-library/react',
             importNames: ['render', 'renderHook'],
-            message: "Use custom `render`, `renderHook` methods."
+            message: 'Use custom `render`, `renderHook` methods.'
           }
         ],
         patterns: [
           {
-            group: [
-              '@mui/*/*/*',
-              '!@mui/material/test-utils/*'
-            ],
+            group: ['@mui/*/*/*', '!@mui/material/test-utils/*'],
             message: 'Do not use the third level imports'
           }
         ]

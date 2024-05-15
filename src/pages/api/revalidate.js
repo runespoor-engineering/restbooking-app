@@ -1,6 +1,7 @@
 import Cors from 'cors';
 import rateLimit from 'express-rate-limit';
-import initMiddleware from '../../utils/initMiddleware.js';
+
+import initMiddleware from '../../utils/initMiddleware';
 
 const cors = initMiddleware(Cors({ methods: ['GET'] }));
 const rateLimiter = initMiddleware(
