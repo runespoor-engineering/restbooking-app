@@ -9,10 +9,14 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { MUTATION_STATUS } from '../../../constants/serverConstants';
+import { MUTATION_STATUS, SUCCESS_NOTIFICATION_KEYS } from '../../../constants/serverConstants';
 import { UserContext } from '../../../context/UserContext/UserContext';
 import withNullabilityCheck from '../../../hocs/withNullabilityCheck';
+import useGlobalTranslations, {
+  GLOBAL_TRANSLATION_TYPE
+} from '../../../hooks/useGlobalTranslations';
 import selectSettings from '../../../utils/componentSettings/selectSettings';
+import AlertNotification from '../../common/AlertNotification';
 import ConfigurableButton from '../../common/ConfigurableButton';
 import { useNormalizedButtonConfig } from '../../common/ConfigurableButton/hooks';
 import { HorizontalStepper } from '../../common/HorizontalStepper';
@@ -25,7 +29,6 @@ import {
 } from './constants';
 import { FormConfigContext } from './context';
 import { useFormSubmit, usePendingForValueFieldOptions, usePlayerDataFormValues } from './hooks';
-import usePasswordConfirmationValidation from './hooks/usePasswordConfirmationValidation';
 import { createValidationSchema, getFormFieldsFromSteps, getFormSettings } from './utils';
 import { isFormOfVerificationType, isPlayerDataVerified } from './utils/playerVerification';
 
@@ -68,6 +71,7 @@ const getStepsLabelsWithStateAndIcons = (formSteps, formState, getValues, active
 
 const FormComponent = ({ staticData }) => {
   const { t } = useTranslation();
+  const { getGlobalTranslation } = useGlobalTranslations();
   const { data: playerData } = useContext(UserContext);
 
   const { form } = staticData || {};
@@ -98,6 +102,8 @@ const FormComponent = ({ staticData }) => {
     headerGridItemProps,
     formGridItemProps,
     formStepSettings,
+    successAlertProps,
+    problemAlertProps,
     footerGridItemProps,
     horizontalStepperSettings
   } = getFormSettings(selectSettings(formSettings));
@@ -113,12 +119,12 @@ const FormComponent = ({ staticData }) => {
   );
 
   const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const [, setIsAlertOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const isActiveStepFirst = activeStepIndex === 0;
   const isActiveStepLast = activeStepIndex === formAttributes.steps.length - 1;
 
-  const [onSubmit, mutationResult, submitRequestStatus] = useFormSubmit(
+  const [onSubmit, mutationResult, submitRequestStatus, submitRequestProblems] = useFormSubmit(
     formType,
     onSubmitLinkToOpen,
     anonymousFallbackLink
@@ -146,8 +152,6 @@ const FormComponent = ({ staticData }) => {
     mode: 'all',
     resolver: yupResolver(schema)
   });
-
-  usePasswordConfirmationValidation(formMethods);
 
   const [pendingForValue] = usePendingForValueFieldOptions(formType);
   usePlayerDataFormValues(formType, formFields, formMethods.setValue);
@@ -277,6 +281,35 @@ const FormComponent = ({ staticData }) => {
                 stepData={step}
               />
             ))}
+            {submitRequestStatus === MUTATION_STATUS.FAIL && submitRequestProblems && !loading && (
+              <AlertNotification
+                close={handleCloseAlert}
+                isOpen={isAlertOpen}
+                severity="error"
+                {...problemAlertProps}
+              >
+                {submitRequestProblems.map((problem) =>
+                  getGlobalTranslation({
+                    iqsTranslationId: problem?.problemCode,
+                    type: GLOBAL_TRANSLATION_TYPE.ERROR,
+                    status: submitRequestStatus
+                  })
+                )}
+              </AlertNotification>
+            )}
+            {submitRequestStatus === MUTATION_STATUS.SUCCESS && (
+              <AlertNotification
+                close={handleCloseAlert}
+                isOpen={isAlertOpen}
+                {...successAlertProps}
+              >
+                {getGlobalTranslation({
+                  iqsTranslationId: SUCCESS_NOTIFICATION_KEYS[formAttributes.type],
+                  status: submitRequestStatus,
+                  type: GLOBAL_TRANSLATION_TYPE.SUCCESS
+                })}
+              </AlertNotification>
+            )}
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '24px' }}>
               {!isActiveStepFirst && (

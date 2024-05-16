@@ -3,7 +3,6 @@ import { shape, string } from 'prop-types';
 import { useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { FORM_TYPES } from '../../../../../../constants/cms';
 import {
   formFieldColorType,
   formFieldDataType,
@@ -12,8 +11,6 @@ import {
 import selectSettings from '../../../../../../utils/componentSettings/selectSettings';
 import { FormConfigContext } from '../../../context';
 import { usePendingForValueFieldOptions } from '../../../hooks';
-import useEmailExistingValidationHandler from '../../../hooks/useEmailExistingValidationHandler';
-import useUserNameExistingValidationHandler from '../../../hooks/useUserNameExistingValidationHandler';
 import { forceLabelShrink, readOnlyFieldLabelShrink } from '../../../utils';
 
 const InputText = ({ fieldData, variant, color, className }) => {
@@ -34,11 +31,9 @@ const InputText = ({ fieldData, variant, color, className }) => {
   const selectedSettings = selectSettings(settings);
   const {
     register,
-    watch,
     trigger,
     getValues,
-    formState: { errors, touchedFields },
-    setError
+    formState: { errors, touchedFields }
   } = useFormContext();
   const { ref: refRegister, onBlur: onBlurFn, ...restRegister } = register(name);
   const { isFormDisabled, isFormReadOnly, formType, handleCloseAlert } =
@@ -49,25 +44,6 @@ const InputText = ({ fieldData, variant, color, className }) => {
     disabled: pendingDisabledState,
     shrink: pendingShrinkState
   } = pendingForValueFieldOptions;
-
-  const debouncedPlayerUserNameExistCheck = useUserNameExistingValidationHandler(
-    watch('username'),
-    setError
-  );
-  const debouncedPlayerEmailExistCheck = useEmailExistingValidationHandler(
-    watch('email'),
-    setError
-  );
-
-  const validateWithMutation = () => {
-    if (
-      (formType === FORM_TYPES.shortRegistration || formType === FORM_TYPES.registration) &&
-      !!getValues(name)
-    ) {
-      if (identifier === 'email') debouncedPlayerEmailExistCheck();
-      if (identifier === 'username') debouncedPlayerUserNameExistCheck();
-    }
-  };
 
   return (
     <TextField
@@ -106,14 +82,11 @@ const InputText = ({ fieldData, variant, color, className }) => {
       variant={variant || 'outlined'}
       onBlur={(event) => {
         onBlurFn(event);
-        validateWithMutation();
       }}
       onKeyUp={() => {
         handleCloseAlert?.();
         if (errors[name]) {
           trigger(name);
-        } else {
-          validateWithMutation();
         }
       }}
       {...selectedSettings?.textFieldProps}

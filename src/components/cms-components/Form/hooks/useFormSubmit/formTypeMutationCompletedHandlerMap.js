@@ -11,8 +11,8 @@ const handlePlayerRegisterCompleted = async ({
   setIsLoggedIn,
   useSaveModalHistory
 }) => {
-  const { sessionToken } = record;
-  setPlayerSessionToken(sessionToken);
+  const { jwt } = record;
+  setPlayerSessionToken(jwt);
   await apolloClient.refetchQueries({
     include: [PLAYER_QUERY]
   });
@@ -37,8 +37,8 @@ const handlePlayerLoginCompleted = async ({
   setIsLoggedIn,
   useSaveModalHistory
 }) => {
-  const { sessionToken } = record;
-  setPlayerSessionToken(sessionToken);
+  const { jwt } = record;
+  setPlayerSessionToken(jwt);
   await apolloClient.refetchQueries({
     include: [PLAYER_QUERY]
   });
@@ -55,15 +55,10 @@ const handlePlayerLoginCompleted = async ({
   }
 };
 
-const handleTicketOpenCompleted = async ({ router }) => {
-  removeQueryParameters(router, ['modal']);
-};
-
 const FORM_TYPE_MUTATION_COMPLETED_HANDLER_MAP = {
   registration: handlePlayerRegisterCompleted,
   shortRegistration: handlePlayerRegisterCompleted,
-  login: handlePlayerLoginCompleted,
-  ticketOpen: handleTicketOpenCompleted
+  login: handlePlayerLoginCompleted
 };
 
 export default FORM_TYPE_MUTATION_COMPLETED_HANDLER_MAP;

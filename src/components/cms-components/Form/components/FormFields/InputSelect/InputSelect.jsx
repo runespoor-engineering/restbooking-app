@@ -2,12 +2,10 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
-import { parseCookies } from 'nookies';
 import { string } from 'prop-types';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { COOKIE_NAMES } from '../../../../../../constants/browser';
 import {
   formFieldColorType,
   formFieldDataType,
@@ -15,7 +13,7 @@ import {
 } from '../../../../../../types';
 import selectSettings from '../../../../../../utils/componentSettings/selectSettings';
 import { FormConfigContext } from '../../../context';
-import { useInputOptions, usePendingForValueFieldOptions } from '../../../hooks';
+import { usePendingForValueFieldOptions } from '../../../hooks';
 import { forceLabelShrink, readOnlyFieldLabelShrink } from '../../../utils';
 
 const COUNTRIES_DIVIDER = '...';
@@ -39,46 +37,17 @@ const InputSelect = ({ fieldData, variant, className }) => {
     control,
     register,
     getValues,
-    setValue,
-    formState: { errors, touchedFields },
-    watch
+    formState: { errors, touchedFields }
   } = useFormContext();
   const { ref: refRegister, ...restRegister } = register(name);
 
   const { isFormDisabled, isFormReadOnly, formType, handleCloseAlert } =
     useContext(FormConfigContext);
-  const cookies = parseCookies();
-  const countryCode = cookies[COOKIE_NAMES.playerCountryCode];
   const [pendingForValue, pendingForValueFieldOptions] = usePendingForValueFieldOptions(formType);
   const { disabled: pendingDisabledState, shrink: pendingShrinkState } =
     pendingForValueFieldOptions;
 
-  const [inputOptions, setInputOptions] = useState(options || []);
-  const [countriesOptions, regionsOptions] = useInputOptions(name, watch);
-
-  useEffect(() => {
-    switch (name) {
-      case 'countryId':
-        setInputOptions(countriesOptions);
-        if (countriesOptions.length) {
-          const { value = '' } =
-            countriesOptions.find((country) => country.iso === countryCode) || {};
-          setValue(name, value);
-        }
-        break;
-      case 'regionId':
-        setInputOptions(regionsOptions);
-        break;
-      case 'currency':
-        if (options.length) {
-          const { value = '' } = options.find((option) => option?.defaultOption) || {};
-          setValue(name, value);
-        }
-        break;
-      default:
-        break;
-    }
-  }, [name, countriesOptions, regionsOptions, countryCode, setValue, options]);
+  const [inputOptions] = useState(options || []);
 
   const InputOptions = useMemo(() => {
     if (name === 'countryId') {

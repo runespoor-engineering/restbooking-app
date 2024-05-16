@@ -1,21 +1,17 @@
-import { useQuery } from '@apollo/client';
 import FormHelperText from '@mui/material/FormHelperText';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 import classnames from 'classnames';
-import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { string } from 'prop-types';
 import { useContext, useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import ConfigContext from '../../../../../../context/ConfigContext';
 import { formFieldDataType } from '../../../../../../types';
 import { FormConfigContext } from '../../../context';
-import { COUNTRIES_QUERY } from '../../../graphql/index';
-import { useCountryAndPhoneInterdependence, usePendingForValueFieldOptions } from '../../../hooks';
+import { usePendingForValueFieldOptions } from '../../../hooks';
 import flagImage from './high-res.png';
 
 const PREFIX = 'InputPhone';
@@ -674,8 +670,6 @@ const InputPhone = ({ fieldData, className }) => {
   } = fieldData;
   const { isFormDisabled, isFormReadOnly, formType, handleCloseAlert } =
     useContext(FormConfigContext);
-  const { bmsPartnerId } = useContext(ConfigContext);
-  const router = useRouter();
   const [pendingForValue, pendingForValueFieldOptions] = usePendingForValueFieldOptions(formType);
   const { disabled: pendingDisabledState } = pendingForValueFieldOptions;
 
@@ -684,11 +678,9 @@ const InputPhone = ({ fieldData, className }) => {
     setError,
     clearErrors,
     control,
-    setValue,
-    watch
+    setValue
   } = useFormContext();
   const { t } = useTranslation();
-  const selectedCountryId = +watch('countryId');
 
   const formats = useMemo(() => getFormatsFromOptions(options), [options]);
 
@@ -699,15 +691,6 @@ const InputPhone = ({ fieldData, className }) => {
     isMaskSelected: false,
     defaultFlagName: ''
   });
-
-  const { data } = useQuery(COUNTRIES_QUERY, {
-    skip: !selectedCountryId,
-    variables: {
-      bmsPartnerId,
-      locale: router.locale
-    }
-  });
-  useCountryAndPhoneInterdependence(selectedCountryId, formats, data?.countries, setState);
 
   const validateWithMask = (maskedValue, mask) => {
     if (mask.length > 0 && mask.length !== maskedValue.length) {

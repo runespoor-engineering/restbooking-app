@@ -34,9 +34,9 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 const Header = () => {
   const { isLoggedIn } = useContext(UserContext);
-  const cms =  useCmsStaticDataContext()
+  const cms = useCmsStaticDataContext();
   const { layout } = useCmsStaticDataContext();
-  console.log('Header', cms)
+  console.log('Header', cms);
 
   const {
     anonymousHeaderUiComponents,

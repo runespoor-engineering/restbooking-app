@@ -93,12 +93,10 @@ const HorizontalLayout = ({ copyright, children }) => {
 
 HorizontalLayout.propTypes = {
   copyright: PropTypes.string,
-  settings: PropTypes.shape(),
   children: PropTypes.node
 };
 
 HorizontalLayout.defaultProps = {
-  settings: undefined,
   copyright: undefined,
   children: undefined
 };
