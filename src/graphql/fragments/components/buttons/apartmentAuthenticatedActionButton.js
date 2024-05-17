@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  fragment gameAnonymousActionButtonComponentFragment on ComponentButtonsGameAnonymousActionButton {
+  fragment apartmentAuthenticatedActionButtonComponentFragment on ComponentButtonsApartmentAuthenticatedActionButton {
     id
     isMuiIconButton
     muiButtonText
-    muiButtonAnonymousAction: muiButtonAction
+    muiButtonAuthenticatedAction: muiButtonAction
     muiButtonLink
     muiIconButtonIcon {
       data {
@@ -22,6 +22,28 @@ export default gql`
       }
     }
     muiButtonEndIcon {
+      data {
+        attributes {
+          ...imageFragment
+        }
+      }
+    }
+    muiButtonTextActive
+    muiIconButtonIconActive {
+      data {
+        attributes {
+          ...imageFragment
+        }
+      }
+    }
+    muiButtonStartIconActive {
+      data {
+        attributes {
+          ...imageFragment
+        }
+      }
+    }
+    muiButtonEndIconActive {
       data {
         attributes {
           ...imageFragment

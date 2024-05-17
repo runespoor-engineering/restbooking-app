@@ -1,3 +1,5 @@
+export { default as APARTMENT_CATEGORY_FRAGMENT } from './apartmentCategory';
+export { default as APARTMENT_PREVIEW_FRAGMENT } from './apartmentPreview';
 export { default as BANNER_FRAGMENT } from './banner';
 export { default as BRAND_FRAGMENT } from './brand';
 export { default as COMMON_PAGE_FRAGMENT } from './commonPage';
@@ -9,3 +11,4 @@ export { default as LANGUAGE_FRAGMENT } from './language';
 export { default as LAYOUT_FRAGMENT } from './layout';
 export { default as NAVIGATION_FRAGMENT } from './navigation';
 export { default as PLAYER_FRAGMENT } from './playerFragment';
+export { default as TEMPLATE_APARTMENT_PREVIEW_FRAGMENT } from './templateApartmentPreview';

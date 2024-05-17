@@ -22,6 +22,7 @@ export default gql`
             ...playerAccountNaviagtionComponentFragment
             ...globalGenericActionButtonComponentFragment
             ...faqCatalogManualComponentFragment
+            ...apartmentsCatalogComponentFragment
           }
           componentsGridContainerSettings {
             ...settingsJsonComponentFragment
