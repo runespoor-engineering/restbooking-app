@@ -18,7 +18,6 @@ const SidebarOverlay = ({
     <Drawer
       PaperProps={{
         sx: {
-          backgroundColor: 'primary.dark',
           backgroundImage: 'none',
           padding: '36px',
           width: {

@@ -33,8 +33,8 @@ const FaqCatalog = ({ staticData }) => {
   };
 
   return (
-    <Grid container {...faqCatalogGridContainerSettings}>
-      <Grid container item xs={12} {...faqCategoryGridContainerSettings}>
+    <Grid container spacing={1} {...faqCatalogGridContainerSettings}>
+      <Grid container item spacing={1} xs={12} {...faqCategoryGridContainerSettings}>
         {faqCategories.map(({ faq_category }, index) => {
           const { title, icon } = faq_category.data.attributes;
           return (
@@ -50,7 +50,7 @@ const FaqCatalog = ({ staticData }) => {
           );
         })}
       </Grid>
-      <Grid container item xs={12} {...faqGridContainerSettings}>
+      <Grid container item xs={12} spacing={1} {...faqGridContainerSettings}>
         {faqCategories[activeFaqCategoryIndex].faq_category.data.attributes.faqs.map(({ faq }) => {
           if (!faq?.data?.attributes) return null;
           const { summary, details, summaryIcon } = faq.data.attributes;

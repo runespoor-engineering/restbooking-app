@@ -48,7 +48,7 @@ const FaqAccordion = ({ expandIcon, summary, summaryIcon, details, settings }) =
             <ExpandMoreIcon />
           )
         }
-        sx={{ p: { xs: '4px 16px', sm: '12px 24px' }, ...accordionSummarySx }}
+        sx={{ ...accordionSummarySx }}
       >
         <Typography
           data-cp="summaryTypographyProps"

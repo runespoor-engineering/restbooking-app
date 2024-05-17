@@ -63,7 +63,6 @@ const NavigationItem = ({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          color: 'primary.contrastText',
           ...navigationItemBoxSx
         }}
       >

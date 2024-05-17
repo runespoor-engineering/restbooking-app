@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PropTypes from 'prop-types';
 
+import ProgressAnimation from '../components/common/ProgressAnimation';
 import GenericPage from '../components/layouts/blocks/GenericPage';
 import HorizontalLayout from '../components/layouts/HorizontalLayout/HorizontalLayout';
 import config from '../config';
@@ -16,14 +17,16 @@ const RootPageComponent = ({ slug, globalContentConfigs, globalUiConfigs, pageCo
   const router = useRouter();
 
   const copyright = globalContentConfigs?.data[0]?.attributes.copyright || null;
-  const pages = pageContents.data || {};
+  const pages = pageContents?.data || {};
   const { uiComponents, seo, componentsGridContainerSettings, permissions, settings } =
     pages[0]?.attributes || {};
 
   const [isAllowed] = usePermissions(permissions);
   useRedirectOnLogout(permissions);
 
-  if (router.isFallback || !isAllowed) return <p>Loading...</p>;
+  console.log(router.isFallback, isAllowed);
+
+  if (router.isFallback || !isAllowed) return <ProgressAnimation />;
 
   return (
     <HorizontalLayout copyright={copyright} settings={settings}>

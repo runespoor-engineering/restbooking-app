@@ -24,9 +24,7 @@ const NavigationSubItem = ({ icon, complexSx, children }) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        color: 'primary.contrastText',
         mt: { xs: '12px', sm: '16px' },
-        opacity: 0.5,
         ...complexSx?.navigationSubItemBoxSx
       }}
     >

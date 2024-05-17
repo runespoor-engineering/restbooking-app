@@ -7,6 +7,7 @@ import {
   GlobalAuthenticatedActionButtonCmsName,
   GlobalGenericActionButtonCmsName
 } from '../../ActionButton';
+import { AuxiliaryNavigation, AuxiliaryNavigationCmsName } from '../../AuxiliaryNavigation';
 import { BannersSlider, componentCmsName as BannersSliderCmsName } from '../../BannersSlider';
 import { componentCmsName as FaqCatalogCmsName, FaqCatalog } from '../../faq/FaqCatalog';
 import { FaqCatalogManualCmsComponent, FaqCatalogManualCmsName } from '../../faq/FaqCatalogManual';
@@ -39,7 +40,8 @@ const GLOBAL_CMS_NAME_TO_COMPONENT_MAP = {
   [GlobalGenericActionButtonCmsName]: ActionButton,
   [GlobalAnonymousActionButtonCmsName]: ActionButton,
   [GlobalAuthenticatedActionButtonCmsName]: ActionButton,
-  [FaqCatalogManualCmsName]: FaqCatalogManualCmsComponent
+  [FaqCatalogManualCmsName]: FaqCatalogManualCmsComponent,
+  [AuxiliaryNavigationCmsName]: AuxiliaryNavigation,
 };
 
 export default GLOBAL_CMS_NAME_TO_COMPONENT_MAP;
