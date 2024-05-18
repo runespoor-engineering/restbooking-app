@@ -4,29 +4,26 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { UserContext } from '../../../context/UserContext/UserContext';
 import useOffsetBasedPagination from '../../../hooks/useOffsetBasedPagination';
+import usePagination from '../../../hooks/usePagination';
 import useResponsiveValue from '../../../hooks/useResponsiveValue';
 import selectSettings from '../../../utils/componentSettings/selectSettings';
 import EntitiesCatalog from '../../common/EntitiesCatalog';
 import GamePreview from './components/ApartmentPreview/ApartmentPreview';
 import ApartmentsCategoriesScroll from './components/ApartmentsCategoriesScroll';
 import getValuesFromGamesCatalogSettings from './getValuesFromGamesCatalogSettings';
-import usePagination from '../../../hooks/usePagination';
 
 const findCategoryBySlug = (gameCategories, slug) => {
   return gameCategories.find(({ gameCategory }) => gameCategory?.data.attributes.slug === slug);
 };
 
-const GamesCatalog = ({
- staticData,
-  globalData,
-  ...props
-}) => {
+const GamesCatalog = ({ staticData, globalData, ...props }) => {
   console.log({
     staticData,
-     globalData,
-     ...props
-   })
-  const { id,
+    globalData,
+    ...props
+  });
+  const {
+    id,
     categories,
     useLoadMore,
     title,
@@ -39,16 +36,17 @@ const GamesCatalog = ({
       xlCategoriesType
     } = {},
     settings,
-    gamePreviewButtonsGridContainerSettings,} = staticData || {
-      title: '',
-      useLoadMore: true,
-      showMoreButton: null,
-      counter: null,
-      defaultCategory: { data: null },
-      categories: [],
-      settings: null,
-      globalData: undefined
-    }
+    gamePreviewButtonsGridContainerSettings
+  } = staticData || {
+    title: '',
+    useLoadMore: true,
+    showMoreButton: null,
+    counter: null,
+    defaultCategory: { data: null },
+    categories: [],
+    settings: null,
+    globalData: undefined
+  };
   const { isLoggedIn } = useContext(UserContext);
   const router = useRouter();
   const { query } = router;
@@ -120,17 +118,10 @@ const GamesCatalog = ({
   );
 
   useEffect(() => setGamesPage(1), [router.asPath, setGamesPage]);
-  console.log('gamesLastElementIndex', {
-    gamesCurrentPage,
-setNextGamesPage,
-isCurrentGamesPageLast,
-gamesLastElementIndex,
-gamesCountLeft,
-  })
 
   const gamesToShow = useOffsetBasedPagination(apartments.data, 0, gamesLastElementIndex + 1);
 
-  console.log('gamesToShow', gamesToShow)
+  console.log('gamesToShow', gamesToShow);
 
   // TODO: Delete it after full migration on game preview templates
   const normalizeEntityAttributes = useCallback(

@@ -3,8 +3,17 @@ import NextImage from 'next/image';
 import { bool, func, number, shape, string } from 'prop-types';
 import React, { memo } from 'react';
 
+export const getStrapiMedia = (url) => {
+  return url.includes('http') ? url : `http://localhost:1337${url}`;
+};
+
 const Image = ({ alt, ...restNextImageProps }) => (
-  <NextImage alt={alt || 'Image content'} {...restNextImageProps} />
+  <NextImage
+    unoptimized
+    alt={alt || 'Image content'}
+    {...restNextImageProps}
+    src={getStrapiMedia(restNextImageProps.src)}
+  />
 );
 
 export default memo(Image);

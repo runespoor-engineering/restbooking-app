@@ -9,9 +9,7 @@
  * @return {Array<String>} - The normalized and filtered array of slugs.
  */
 export const normalizeGamesSlugs = (gamesSlugs) =>
-  gamesSlugs
-    .map((gameSlug) => gameSlug.attributes.library_game?.data?.attributes?.slug)
-    .filter(Boolean);
+  gamesSlugs.map((gameSlug) => gameSlug.attributes.slug).filter(Boolean);
 
 /**
  * Normalize the array of slugs for Lobby entities.

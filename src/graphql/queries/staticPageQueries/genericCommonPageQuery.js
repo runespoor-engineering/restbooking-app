@@ -36,7 +36,10 @@ import {
   THEME_COMPONENT_FRAGMENT,
   USE_BREAKPOINT_COMPONENT_FRAGMENT
 } from '../../fragments/components';
-import { APARTMENTS_CATALOG_COMPONENT_FRAGMENT, APARTMENT_TITLE_PLACEHOLDER_COMPONENT_FRAGMENT } from '../../fragments/components/apartments';
+import {
+  APARTMENT_TITLE_PLACEHOLDER_COMPONENT_FRAGMENT,
+  APARTMENTS_CATALOG_COMPONENT_FRAGMENT
+} from '../../fragments/components/apartments';
 
 export default gql`
   ${THEME_COMPONENT_FRAGMENT}
