@@ -60,7 +60,7 @@ module.exports = {
     return config;
   },
   images: {
-    domains: ['localhost']
+    domains: ['localhost', 'dummyimage.com']
   },
   compress: process.env.NODE_ENV === 'development' // Next.js can't handle heavy HTML without compression in dev
 };

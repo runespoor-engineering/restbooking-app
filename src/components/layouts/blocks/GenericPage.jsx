@@ -25,7 +25,7 @@ const GenericPage = ({
       {uiComponents && (
         <CmsComponentsGrid
           cmsComponents={uiComponents}
-          cmsComponentsMap={cmsComponentsMap || GLOBAL_CMS_NAME_TO_COMPONENT_MAP}
+          cmsComponentsMap={GLOBAL_CMS_NAME_TO_COMPONENT_MAP}
           globalUiConfigs={globalUiConfigs}
           gridContainerSettings={componentsGridContainerSettings}
         />

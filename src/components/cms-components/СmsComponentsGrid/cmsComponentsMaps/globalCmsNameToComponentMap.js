@@ -7,6 +7,7 @@ import {
   GlobalAuthenticatedActionButtonCmsName,
   GlobalGenericActionButtonCmsName
 } from '../../ActionButton';
+import GamesCatalog from '../../ApartmentsCatalog/GamesCatalog';
 import { AuxiliaryNavigation, AuxiliaryNavigationCmsName } from '../../AuxiliaryNavigation';
 import { BannersSlider, componentCmsName as BannersSliderCmsName } from '../../BannersSlider';
 import { componentCmsName as FaqCatalogCmsName, FaqCatalog } from '../../faq/FaqCatalog';
@@ -23,6 +24,7 @@ import { PrimaryNavigation, PrimaryNavigationCmsName } from '../../PrimaryNaviga
 import { componentCmsName as RichTextCmsName, RichText } from '../../RichText';
 import { SecondaryNavigation, SecondaryNavigationCmsName } from '../../SecondaryNavigation';
 import { ThemeSwitcher, ThemeSwitcherCmsName } from '../../ThemeSwitcher';
+export const GamesCatalogCmsName = 'ComponentApartmentsApartmentsCatalog';
 
 const GLOBAL_CMS_NAME_TO_COMPONENT_MAP = {
   [RichTextCmsName]: RichText,
@@ -42,6 +44,8 @@ const GLOBAL_CMS_NAME_TO_COMPONENT_MAP = {
   [GlobalAuthenticatedActionButtonCmsName]: ActionButton,
   [FaqCatalogManualCmsName]: FaqCatalogManualCmsComponent,
   [AuxiliaryNavigationCmsName]: AuxiliaryNavigation,
+  [GamesCatalogCmsName]: GamesCatalog
+
 };
 
 export default GLOBAL_CMS_NAME_TO_COMPONENT_MAP;

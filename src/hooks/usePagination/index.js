@@ -21,6 +21,7 @@ const usePagination = (elementsCount, elementsCountPerPage, defaultPage = 1) => 
     () => (currentPage - 1) * elementsCountPerPage,
     [currentPage, elementsCountPerPage]
   );
+  console.log(elementsCount, firstElementIndex, elementsCountPerPage)
   const lastElementIndex = useMemo(
     () => (shouldPaginate ? firstElementIndex + elementsCountPerPage - 1 : elementsCount - 1),
     [elementsCount, elementsCountPerPage, firstElementIndex, shouldPaginate]
