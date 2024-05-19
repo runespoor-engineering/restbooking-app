@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client';
 
-import { COVER_IMAGE_COMPONENT_FRAGMENT } from '../../fragments/components';
 import { IMAGE_FRAGMENT } from '../../fragments/common';
+import { COVER_IMAGE_COMPONENT_FRAGMENT } from '../../fragments/components';
 
 export default gql`
-${IMAGE_FRAGMENT}
+  ${IMAGE_FRAGMENT}
   ${COVER_IMAGE_COMPONENT_FRAGMENT}
   query ApartmentQuery($slug: String!, $brandIdentifier: String!, $locale: I18NLocaleCode!) {
     apartment: apartments(
