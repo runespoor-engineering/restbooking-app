@@ -11,9 +11,12 @@ import config from '../../config';
 import { PUBLICATION_STATE } from '../../constants/cms';
 import { UserContext } from '../../context/UserContext/UserContext';
 import { APARTMENT_QUERY, LAYOUTS_QUERY_ALL } from '../../graphql/queries/collections';
+import { APARTMENT_BOOKING_ORDERS } from '../../graphql/queries/collections/apartmentBookings';
 import { GAMES_SLUGS_QUERY } from '../../graphql/queries/pages';
 import { GENERIC_COMMON_PAGE_QUERY } from '../../graphql/queries/staticPageQueries';
 import initializeApollo from '../../utils/apollo/initializeApolloClient';
+import { getBookedDates } from '../../utils/getBookedDates';
+import { getDatesBetween, isSameDay } from '../../utils/getDatesBetween';
 import { generateStaticProps } from '../../utils/pages/generateStaticProps';
 import { generateStaticPaths, normalizeGamesSlugs } from '../../utils/pages/getStaticPaths';
 import { CREATE_BOOKING_ORDER_MUTATION } from './bookApartMutation';
@@ -51,6 +54,20 @@ export const getStaticProps = async (ctx) => {
     }
   });
 
+  const { data: apartmentBookingsData } = await apolloClient.query({
+    query: APARTMENT_BOOKING_ORDERS,
+    variables: {
+      brandIdentifier: config.identifier,
+      apartmentSlug: gameSlug,
+      locale: ctx.locale
+    }
+  });
+
+  console.log('apartmentBookingsData', apartmentBookingsData);
+
+  const bookedDates = getBookedDates(apartmentBookingsData?.bookingOrders?.data || []);
+  console.log('======bookedDates', bookedDates);
+
   const { data: genericData } = await apolloClient.query({
     query: GENERIC_COMMON_PAGE_QUERY,
     variables: {
@@ -74,9 +91,11 @@ export const getStaticProps = async (ctx) => {
 
   const staticProps = await generateStaticProps({
     data: {
+      apartmentId: apartmentData.apartment.data[0].id,
       apartment: apartmentData.apartment.data[0],
       ...genericData,
-      layout: { ...layoutData }
+      layout: { ...layoutData },
+      bookedDates
     },
     ctx,
     serverSideTranslations
@@ -85,15 +104,24 @@ export const getStaticProps = async (ctx) => {
   return staticProps;
 };
 
-const RootPageComponent = ({ apartment, slug, globalContentConfigs, globalUiConfigs, ...rest }) => {
+const RootPageComponent = ({
+  apartmentId,
+  apartment,
+  slug,
+  globalContentConfigs,
+  globalUiConfigs,
+  bookedDates,
+  ...rest
+}) => {
+  console.log('bookedDates', bookedDates);
   const router = useRouter();
   const { isLoggedIn, data } = useContext(UserContext);
   const [value, setValue] = useState([]);
   const [mutate] = useMutation(CREATE_BOOKING_ORDER_MUTATION, {
     variables: {
       input: {
-        apartmentId: apartment?.attributes?.id,
-        userId: data?.me?.id,
+        apartment: apartmentId,
+        users_permissions_user: data?.me?.id,
         bookingInfo: {
           startDate: value[0],
           endDate: value[1]
@@ -108,14 +136,28 @@ const RootPageComponent = ({ apartment, slug, globalContentConfigs, globalUiConf
 
   return (
     <HorizontalLayout copyright={copyright}>
-      <h1>{apartment?.attributes?.title}</h1>
+      <h1>
+        {apartment?.attributes?.title} - {apartment?.attributes?.price}$
+      </h1>
       <Box sx={{ position: 'relative', width: '100%', height: 300 }}>
         <CoverImage coverImage={apartment?.attributes?.coverImage} />
       </Box>
       <p>{apartment?.attributes?.shortDescription}</p>
       <p>{apartment?.attributes?.longDescription}</p>
-      <DateRangePicker disablePast onChange={(newValue) => setValue(newValue)} />
-      <Button onClick={() => mutate()}>Book</Button>
+      <DateRangePicker
+        disablePast
+        shouldDisableDate={(date) =>
+          bookedDates?.some((bookedDate) => isSameDay(new Date(bookedDate), date))
+        }
+        onChange={(newValue) => setValue(newValue)}
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={isLoggedIn ? () => mutate() : () => router.push('/home')}
+      >
+        Book
+      </Button>
     </HorizontalLayout>
   );
 };

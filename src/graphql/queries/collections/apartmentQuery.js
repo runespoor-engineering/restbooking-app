@@ -12,6 +12,7 @@ export default gql`
       locale: $locale
     ) {
       data {
+        id
         attributes {
           title
           shortDescription
