@@ -27,8 +27,8 @@ const ApartmentsCategoriesScroll = ({
               counter={categoryAttributes.uniqueSortedGames?.data.length}
               displayCounter={displayCategoryGamesCount}
               handleClick={getCategoryTileClickHandler(categoryAttributes.slug)}
-              // icon={categoryAttributes.tileIcon}
-              icon={{data: {attributes: {url: 'https://dummyimage.com/600x400/000/fff'}}}}
+              icon={categoryAttributes.tileIcon}
+              // icon={{data: {attributes: {url: 'https://dummyimage.com/600x400/000/fff'}}}}
               isActive={activeCategorySlug === categoryAttributes.slug}
               settings={gameCategoryTileSettings}
               title={categoryAttributes.title}

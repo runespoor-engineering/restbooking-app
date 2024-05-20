@@ -129,11 +129,7 @@ const GamesCatalog = ({ staticData, globalData, ...props }) => {
       const squareThumbnail = attributes.squareThumbnail?.data;
       return {
         title: attributes.title,
-        thumbnailData: {
-          attributes: {
-            url: 'https://dummyimage.com/600x400/000/fff'
-          }
-        },
+        thumbnailData: squareThumbnail,
         route: attributes.route,
         slug: attributes.slug,
         aspectRatioKeeper: gamePreviewAspectRatioKeeper,

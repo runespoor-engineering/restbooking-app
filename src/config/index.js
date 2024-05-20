@@ -29,7 +29,7 @@ const ROUTES = {
 };
 
 const config = {
-  identifier: 'brand-1',
+  identifier: process.env.NEXT_PUBLIC_IDENTIFIER,
   directPageSlugs: [
     // ROUTES.FORGOT_PASSWORD,
     ROUTES.GAME_TEMPLATE_PAGE,

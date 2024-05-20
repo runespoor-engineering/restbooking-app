@@ -17,6 +17,8 @@ console.log(
   process.env.NEXT_PUBLIC_WEBSITE_WEB_API_URL
 );
 
+console.log('NEXT_PUBLIC_IDENTIFIER', process.env.NEXT_PUBLIC_IDENTIFIER);
+
 // TODO add NL Before RD launch PT-2015
 module.exports = {
   // This disables standalone build mode by default, so that rush build works as before.

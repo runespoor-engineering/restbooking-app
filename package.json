@@ -1,7 +1,8 @@
 {
   "name": "restbooking-app",
   "scripts": {
-    "dev": "NODE_OPTIONS='--dns-result-order=ipv4first' next dev -p 3000",
+    "dev": "NODE_OPTIONS='--dns-result-order=ipv4first' NEXT_PUBLIC_IDENTIFIER='brand-1' next dev -p 3000",
+    "dev:2": "NODE_OPTIONS='--dns-result-order=ipv4first' NEXT_PUBLIC_IDENTIFIER='brand-2' next dev -p 3001",
     "build": "NODE_OPTIONS='--dns-result-order=ipv4first' next build 2>&1",
     "bundlesize": "bundlesize",
     "start": "NODE_OPTIONS='--dns-result-order=ipv4first --require ./src/utils/logger.js' node_modules/.bin/next start -H localhost -p 3000",

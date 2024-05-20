@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo } from 'react';
 
 import { ActionButtonClickHandlersProvider } from '../components/cms-components/ActionButton/context/ActionButtonClickHandlersContext';
+import DynamicComponentsModal from '../components/common/DynamicComponentsModal/DynamicComponentsModal';
 // import DynamicComponentsModal from '../common/DynamicComponentsModal/DynamicComponentsModal';
 import config from '../config';
 import localeMap from '../config/datepickerLocalization';
@@ -71,7 +72,7 @@ const RootAppComponent = ({ Component, pageProps, emotionCache = clientSideEmoti
                     adapterLocale={localeMap[router.locale]}
                     dateAdapter={AdapterDateFns}
                   >
-                    {/* <DynamicComponentsModal /> */}
+                    <DynamicComponentsModal />
                     <DefaultSeo />
                     <Component {...pageProps} />
                   </LocalizationProvider>

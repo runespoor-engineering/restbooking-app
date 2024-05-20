@@ -43,6 +43,7 @@ const Tile = ({
       component={link ? NextLinkComposed : undefined}
       role={link ? 'link' : 'button'}
       {...mainBoxGridContainerProps}
+      spacing={1}
       sx={{
         flexDirection: 'row',
         flexWrap: 'nowrap',

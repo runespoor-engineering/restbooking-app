@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import {  number, shape, string } from 'prop-types';
+import { useRouter } from 'next/router';
+import { number, shape, string } from 'prop-types';
 import { useMemo } from 'react';
 
 import GameDataContext from '../../../../../context/GameDataContext';
@@ -42,6 +43,7 @@ const GamePreview = ({
   imageSizes,
   templateAttributes
 }) => {
+  const router = useRouter();
   const thumbnailAttributes = thumbnailData?.attributes;
   const { containerSx, imageCss, overlaySx } = settings || {};
 
@@ -74,7 +76,12 @@ const GamePreview = ({
             />
           )}
           <PositionedContainer aspectRatioKeeper={aspectRatioKeeper}>
-            <Overlay sx={overlaySx}>
+            <Overlay
+              sx={overlaySx}
+              onClick={() => {
+                router.push(`apartment/${slug}`);
+              }}
+            >
               <GamePreviewDynamicZone
                 buttonClickHandlerArgumentsContextValue={buttonClickHandlerArgumentsContextValue}
                 cmsComponents={uiComponentsOverlay}

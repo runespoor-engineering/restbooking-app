@@ -23,5 +23,12 @@ export default gql`
         }
       }
     }
+    modalContents(filters: { brand: { identifier: { eq: $brandIdentifier } } }, locale: $locale) {
+      data {
+        attributes {
+          ...modalContentFragment
+        }
+      }
+    }
   }
 `;
