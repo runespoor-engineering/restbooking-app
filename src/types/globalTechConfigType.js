@@ -5,7 +5,6 @@ export default shape({
     host: string.required,
     enabled: bool.required,
     casinoId: string.required,
-    cloverPID: string.required,
     skinId: string.required,
     sportsbookValues: shape()
   }),
